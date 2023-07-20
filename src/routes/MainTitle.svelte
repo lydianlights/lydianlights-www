@@ -33,14 +33,14 @@
     resolutionScale={2}
     class="w-full py-32 flex flex-col justify-center items-stretch bg-grey-950"
 >
-    <div class="slide-in bg-black bg-opacity-90 py-20 px-40">
+    <div class="slide-in bg-black bg-opacity-90 py-12 px-40">
         <div
             style:--text-width="calc({TEXT.length}ch + {TEXT.length * 0.05}em)"
             style:--text-char-count={TEXT.length}
-            class="flex flex-nowrap text-[5rem] font-pixel"
+            class="flex flex-nowrap text-[5rem] font-pixel text-glow"
         >
             <div class="mr-5">&gt;</div>
-            <div class:type={doType} class="flex-none w-0 whitespace-nowrap overflow-hidden pb-1">
+            <div class:type={doType} class="flex-none w-0 whitespace-nowrap overflow-hidden">
                 {TEXT}
             </div>
             <div class:invisible={!entered} class:blink={doBlink}>_</div>

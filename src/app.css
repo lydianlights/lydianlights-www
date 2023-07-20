@@ -1,3 +1,4 @@
+/* TODO: Clean this up */
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Expanded&family=Fira+Code&family=M+PLUS+1+Code&family=M+PLUS+Code+Latin&family=Press+Start+2P&family=Roboto+Mono&family=Source+Code+Pro&family=VT323&display=swap");
 
 @tailwind base;
@@ -29,5 +30,9 @@ body {
 
     .absolute-fill {
         @apply absolute top-0 left-0 bottom-0 right-0;
+    }
+
+    .text-glow {
+        text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.55);
     }
 }
