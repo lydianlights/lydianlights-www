@@ -88,7 +88,7 @@
 
     function setMousePos(x: number, y: number) {
         uniforms.mouse_active.value = true;
-        uniforms.mouse_pos.value.set(x, height - y);
+        uniforms.mouse_pos.value.set(x / resolutionScale, (height - y) / resolutionScale);
     }
 
     function setMouseExit() {
