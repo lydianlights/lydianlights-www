@@ -1,7 +1,6 @@
 <script lang="ts">
-    import type { OGLRenderingContext } from "ogl";
-    import { Renderer, Camera, Transform, Program, Mesh, Plane, Vec2 } from "ogl";
     import { onMount } from "svelte";
+    import Regl from "regl";
     import defaultVertextShader from "./defaultVertextShader";
     import fragmentShaderTemplate from "./fragmentShaderTemplate";
 
@@ -10,94 +9,92 @@
     let klass: string = "";
     export { klass as class };
 
-    let rootElement: HTMLDivElement;
+    let canvas: HTMLCanvasElement;
     let width: number;
     let height: number;
     let loaded = false;
 
     const uniforms = {
-        time: { value: 0.0 },
-        resolution: { value: new Vec2() },
-        mouse_pos: { value: new Vec2() },
-        mouse_active: { value: false },
+        mouse_pos: [0.0, 0.0],
+        mouse_active: false,
     };
 
-    let renderer: Renderer;
-    let gl: OGLRenderingContext;
-    let camera: Camera;
-    let scene: Transform;
-
     onMount(() => {
-        renderer = new Renderer();
-        gl = renderer.gl;
-        gl.clearColor(0.0, 0.0, 0.0, 1.0);
-        rootElement.appendChild(gl.canvas);
+        try {
+            const regl = Regl(canvas);
+            const drawQuad = regl({
+                vert: defaultVertextShader,
+                frag: `${fragmentShaderTemplate}${shader}`,
+                uniforms: {
+                    time: (context) => context.time,
+                    resolution: (context) => [context.viewportWidth, context.viewportHeight],
+                    mousePos: (context, props) => (props as any).mousePos,
+                    mouseActive: (context, props) => (props as any).mouseActive,
+                },
+                attributes: {
+                    position: [
+                        [-1, -1],
+                        [1, -1],
+                        [1, 1],
+                        [-1, 1],
+                    ],
+                },
+                elements: [0, 1, 2, 0, 2, 3],
+                count: 6,
+            });
 
-        camera = new Camera(gl, { fov: 45 });
-        camera.position.set(0, 0, 1);
-        setRenderSize(width, height);
+            loaded = true;
 
-        scene = new Transform();
-        const geometry = new Plane(gl, {
-            width: 2.0,
-            height: 2.0,
-        });
-        const program = new Program(gl, {
-            vertex: defaultVertextShader,
-            fragment: `${fragmentShaderTemplate}${shader}`,
-            uniforms,
-        });
-        const mesh = new Mesh(gl, { geometry, program });
-        mesh.setParent(scene);
+            regl.frame(() => {
+                try {
+                    regl.clear({
+                        color: [0, 0, 0, 1],
+                        depth: 1,
+                    });
+                    drawQuad({
+                        mousePos: uniforms.mouse_pos,
+                        mouseActive: uniforms.mouse_active,
+                    });
+                } catch (e) {
+                    regl.destroy();
+                }
+            });
 
-        let startTime = performance.now();
-        let frame = requestAnimationFrame(mainLoop);
-        loaded = true;
-
-        function mainLoop() {
-            frame = requestAnimationFrame(mainLoop);
-            try {
-                const t = performance.now();
-                uniforms.time.value = (t - startTime) / 1000;
-                renderer.render({ scene, camera });
-            } catch (e) {
-                cancelAnimationFrame(frame);
-            }
+            return () => {
+                regl.destroy();
+            };
+        } catch (e) {
+            // nothing
         }
-
-        return () => {
-            cancelAnimationFrame(frame);
-        };
     });
 
     $: {
-        setRenderSize(width, height);
+        setCanvasSize(width, height);
     }
 
-    function setRenderSize(width: number, height: number) {
-        if (renderer && camera) {
-            const aspect = width / height;
-            uniforms.resolution.value.x = width / resolutionScale;
-            uniforms.resolution.value.y = height / resolutionScale;
-            renderer.setSize(width / resolutionScale, height / resolutionScale);
-            renderer.gl.canvas.style.width = `${gl.canvas.width * resolutionScale}px`;
-            gl.canvas.style.height = `${gl.canvas.height * resolutionScale}px`;
-            camera.perspective({ aspect });
+    function setCanvasSize(width: number, height: number) {
+        if (canvas) {
+            canvas.width = width / resolutionScale;
+            canvas.height = height / resolutionScale;
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
         }
     }
 
     function setMousePos(x: number, y: number) {
-        uniforms.mouse_active.value = true;
-        uniforms.mouse_pos.value.set(x / resolutionScale, (height - y) / resolutionScale);
+        uniforms.mouse_active = true;
+        uniforms.mouse_pos = [x / resolutionScale, (height - y) / resolutionScale];
     }
 
     function setMouseExit() {
-        uniforms.mouse_active.value = false;
+        uniforms.mouse_active = false;
     }
 </script>
 
 <div
     role="none"
+    bind:clientWidth={width}
+    bind:clientHeight={height}
     on:mousemove={(e) => setMousePos(e.clientX, e.clientY)}
     on:mouseleave={setMouseExit}
     on:touchstart={(e) =>
@@ -107,13 +104,7 @@
     on:touchend={setMouseExit}
     class="relative z-0 {klass}"
 >
-    <div
-        aria-hidden
-        bind:this={rootElement}
-        bind:clientWidth={width}
-        bind:clientHeight={height}
-        class="absolute-fill -z-20"
-    />
+    <canvas bind:this={canvas} aria-hidden class="absolute-fill -z-20" />
     <div class:fade-out={loaded} class="absolute-fill -z-10 bg-black fade-out" />
     <slot />
 </div>

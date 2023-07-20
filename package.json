@@ -2,6 +2,7 @@
     "name": "lydianlights-www",
     "version": "1.0.0",
     "private": true,
+    "type": "module",
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
@@ -9,6 +10,10 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "lint": "prettier --write . && eslint . --fix"
+    },
+    "dependencies": {
+        "@sveltejs/adapter-vercel": "^3.0.2",
+        "regl": "^2.1.0"
     },
     "devDependencies": {
         "@sveltejs/adapter-auto": "^2.0.0",
@@ -29,11 +34,5 @@
         "tslib": "^2.4.1",
         "typescript": "^5.0.0",
         "vite": "^4.4.2"
-    },
-    "type": "module",
-    "dependencies": {
-        "@sveltejs/adapter-vercel": "^3.0.2",
-        "@types/ogl": "npm:ogl-types@^0.0.102",
-        "ogl": "^0.0.117"
     }
 }

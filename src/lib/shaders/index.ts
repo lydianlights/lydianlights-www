@@ -3,8 +3,8 @@ import { snoise } from "./utils";
 export const debugShader = `
 void main() {
     vec2 uv = (2.0 * gl_FragCoord.xy - resolution.xy) / resolution.y;
-    vec2 mouseUV = (2.0 * mouse_pos.xy - resolution.xy) / resolution.y;
-    float m = mouse_active ? distance(uv, mouseUV) : 0.0;
+    vec2 mouseUV = (2.0 * mousePos.xy - resolution.xy) / resolution.y;
+    float m = mouseActive ? distance(uv, mouseUV) : 0.0;
     vec3 color = vec3(uv.x, uv.y, m);
     gl_FragColor = vec4(color, 1.0);
 }
@@ -43,14 +43,14 @@ float getNoise(in vec2 uv) {
 
 void main() {
     vec2 uv = (2.0 * gl_FragCoord.xy - resolution.xy) / resolution.y;
-    vec2 mouseUV = 2.0 * (mouse_pos.xy / resolution.xy) - 1.0;
+    vec2 mouseUV = 2.0 * (mousePos.xy / resolution.xy) - 1.0;
     mouseUV.x *= resolution.x / resolution.y;
 
     float n = getNoise(SCALE * uv + OFFSET);
 
     float m = 0.3 / distance(uv, mouseUV);
     m = pow(m, 1.5);
-    m = mouse_active ? m : 0.0;
+    m = mouseActive ? m : 0.0;
     float p = 2.0 + m;
 
     n = pow(n, p);
