@@ -48,8 +48,8 @@ void main() {
 
     float n = getNoise(SCALE * uv + OFFSET);
 
-    float m = 0.3 / distance(uv, mouseUV);
-    m = pow(m, 1.5);
+    float m = 0.5 / distance(uv, mouseUV);
+    m = pow(m, 2.0);
     m = mouseActive ? m : 0.0;
     float p = 2.0 + m;
 

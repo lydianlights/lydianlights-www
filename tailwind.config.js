@@ -10,7 +10,7 @@ export default {
         colors: {
             transparent: "transparent",
             current: "currentColor",
-            black: "#000000",
+            black: "#020200",
             white: "#ffffff",
             grey: {
                 ...colors.zinc,

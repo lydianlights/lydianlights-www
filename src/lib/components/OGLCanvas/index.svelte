@@ -82,8 +82,13 @@
     }
 
     function setMousePos(x: number, y: number) {
-        uniforms.mouse_active = true;
-        uniforms.mouse_pos = [x / resolutionScale, (height - y) / resolutionScale];
+        if (canvas) {
+            const bounds = canvas.getBoundingClientRect();
+            const offsetX = x - bounds.x;
+            const offsetY = y - bounds.y;
+            uniforms.mouse_active = true;
+            uniforms.mouse_pos = [offsetX / resolutionScale, (height - offsetY) / resolutionScale];
+        }
     }
 
     function setMouseExit() {
