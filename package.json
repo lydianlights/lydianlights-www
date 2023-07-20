@@ -32,6 +32,8 @@
     },
     "type": "module",
     "dependencies": {
-        "@sveltejs/adapter-vercel": "^3.0.2"
+        "@sveltejs/adapter-vercel": "^3.0.2",
+        "@types/ogl": "npm:ogl-types@^0.0.102",
+        "ogl": "^0.0.117"
     }
 }

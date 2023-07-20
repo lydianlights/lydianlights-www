@@ -1,1 +1,5 @@
-<h1 class="text-8xl">Hello World</h1>
+<script>
+    import MainTitle from "./MainTitle.svelte";
+</script>
+
+<MainTitle />

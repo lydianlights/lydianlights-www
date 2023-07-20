@@ -1,7 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Expanded&family=Fira+Code&family=M+PLUS+1+Code&family=M+PLUS+Code+Latin&family=Press+Start+2P&family=Roboto+Mono&family=Source+Code+Pro&family=VT323&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "tom7-pixel10";
+    src: local(""), url("/fonts/px10.ttf");
+}
+
 body {
     @apply bg-grey-800 text-white;
+}
+
+@layer utilities {
+    .font-pixel {
+        font-family: "VT323", monospace;
+        letter-spacing: 0.05em;
+        /* font-family: "Encode Sans Semi Expanded", monospace; */
+        /* font-family: "Fira Code", monospace; */
+        /* font-family: "M PLUS 1 Code", monospace; */
+        /* font-family: "M PLUS Code Latin", monospace; */
+        /* font-family: "Press Start 2P", monospace; */
+        /* font-family: "Roboto Mono", monospace; */
+        /* font-family: "Source Code Pro", monospace; */
+        /* font-family: "tom7-pixel10", monospace; */
+    }
+
+    .absolute-fill {
+        @apply absolute top-0 left-0 bottom-0 right-0;
+    }
 }
