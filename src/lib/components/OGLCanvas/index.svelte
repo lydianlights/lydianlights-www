@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import Regl from "regl";
+    import throttle from "lodash/throttle";
     import defaultVertextShader from "./defaultVertextShader";
     import fragmentShaderTemplate from "./fragmentShaderTemplate";
 
@@ -43,6 +44,7 @@
                 count: 6,
             });
 
+            setCanvasSize(width, height);
             loaded = true;
 
             regl.frame(() => {
@@ -72,16 +74,16 @@
         setCanvasSize(width, height);
     }
 
-    function setCanvasSize(width: number, height: number) {
+    const setCanvasSize = throttle(function (width: number, height: number) {
         if (canvas) {
             canvas.width = width / resolutionScale;
             canvas.height = height / resolutionScale;
             canvas.style.width = `${width}px`;
             canvas.style.height = `${height}px`;
         }
-    }
+    }, 50);
 
-    function setMousePos(x: number, y: number) {
+    const setMousePos = throttle(function (x: number, y: number) {
         if (canvas) {
             const bounds = canvas.getBoundingClientRect();
             const offsetX = x - bounds.x;
@@ -89,7 +91,7 @@
             uniforms.mouse_active = true;
             uniforms.mouse_pos = [offsetX / resolutionScale, (height - offsetY) / resolutionScale];
         }
-    }
+    }, 10);
 
     function setMouseExit() {
         uniforms.mouse_active = false;

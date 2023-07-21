@@ -14,6 +14,7 @@ export default {
             white: "#ffffff",
             grey: {
                 ...colors.zinc,
+                1000: "#070709",
             },
             primary: {
                 light: colors.violet[500],

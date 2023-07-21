@@ -20,20 +20,29 @@
     }
 </script>
 
-<div class="slide-in flex-1 w-full 2xl:w-[100rem] max-w-full px-20 pt-10 flex gap-8">
-    <div class="font-pixel text-glow text-[2rem] 2xl:text-[2.5rem]">?WHOAMI_?</div>
-    <div>
-        <div class="font-pixel text-glow text-[2rem] 2xl:text-[2.5rem] mb-6">
-            # <TextRandomizer stop={stop[0]} infinite={infinite[0]} text="Web developer" />
-        </div>
-        <div class="font-pixel text-glow text-[2rem] 2xl:text-[2.5rem] mb-6">
-            # <TextRandomizer stop={stop[1]} infinite={infinite[1]} text="Creative coder" />
-        </div>
-        <div class="font-pixel text-glow text-[2rem] 2xl:text-[2.5rem] mb-6">
-            # <TextRandomizer stop={stop[2]} infinite={infinite[2]} text="Programming enthusiast" />
-        </div>
-        <div class="font-pixel text-glow text-[2rem] 2xl:text-[2.5rem] mb-6">
-            # ?<TextRandomizer infinite text="dumb" />_<TextRandomizer infinite text="furry" />??
+<div class="relative flex-1 flex-grow-[0.5] w-full 2xl:w-[100rem] max-w-full px-20">
+    <div
+        class="slide-in flex gap-16 mt-4 px-8 py-8 2xl:mt-8 2xl:px-12 2xl:py-12
+        bg-black bg-opacity-70 border border-white border-opacity-50 backdrop-blur-[2px]
+        rounded glow-white font-pixel text-glow text-[2rem] 2xl:text-[2.5rem]"
+    >
+        <div class="">?WHOAMI_?</div>
+        <div>
+            <div class=" mb-4">
+                # <TextRandomizer stop={stop[0]} infinite={infinite[0]} text="Web developer" />
+            </div>
+            <div class=" mb-4">
+                # <TextRandomizer stop={stop[1]} infinite={infinite[1]} text="Creative coder" />
+            </div>
+            <div class=" mb-4">
+                # <TextRandomizer stop={stop[2]} infinite={infinite[2]} text="Lovable nerd" />
+            </div>
+            <div class="">
+                # ?<TextRandomizer infinite text="dumb" />_<TextRandomizer
+                    infinite
+                    text="furry"
+                />??
+            </div>
         </div>
     </div>
 </div>
