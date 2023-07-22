@@ -23,7 +23,7 @@
     }
 
     .rotate {
-        animation: rotate var(--rotation-time) linear infinite var(--rotation-dir, normal);
+        animation: rotate var(--rotation-time) steps(32) infinite var(--rotation-dir, normal);
     }
 
     @keyframes rotate {

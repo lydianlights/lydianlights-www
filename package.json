@@ -14,7 +14,8 @@
     "dependencies": {
         "@sveltejs/adapter-vercel": "^3.0.2",
         "lodash": "^4.17.21",
-        "regl": "^2.1.0"
+        "regl": "^2.1.0",
+        "svelte-icons": "^2.1.0"
     },
     "devDependencies": {
         "@sveltejs/adapter-auto": "^2.0.0",

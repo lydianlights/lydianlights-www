@@ -1,4 +1,5 @@
 import colors from "tailwindcss/colors";
+import defaultTheme from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */
@@ -21,6 +22,10 @@ export default {
                 DEFAULT: colors.violet[600],
                 dark: colors.violet[700],
             },
+        },
+        screens: {
+            ...defaultTheme.screens,
+            "3xl": "1920px",
         },
     },
     plugins: [

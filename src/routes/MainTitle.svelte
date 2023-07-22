@@ -42,12 +42,9 @@
                     class="flex flex-nowrap text-[5rem] font-pixel text-glow"
                 >
                     <div class="mr-5">&gt;</div>
-                    <div
-                        class:type={doType}
-                        class="flex-none w-0 whitespace-nowrap overflow-hidden"
-                    >
+                    <h1 class:type={doType} class="flex-none w-0 whitespace-nowrap overflow-hidden">
                         {TEXT}
-                    </div>
+                    </h1>
                     <div class:invisible={!entered} class:blink={doBlink}>_</div>
                 </div>
             </div>
